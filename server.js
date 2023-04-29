@@ -1,7 +1,6 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 require("dotenv").config();
-// require("mongoose");
 // express app initialization
 const app = express();
 const cors = require("cors");
@@ -29,4 +28,4 @@ const start = async () => {
 };
 start().catch((err) => {
   console.log(err);
-});
+})
