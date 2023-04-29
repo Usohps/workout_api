@@ -17,14 +17,16 @@ app.use("/api/workouts", workoutRoutes);
 // routes
 const start = async () => {
   try {
-    await mongoose.connect(`${process.env.DB_URL}/workouts_details`);
+    await mongoose.connect(`${process.env.BASE_URL}`);
     app.listen(process.env.PORT, () => {
       console.log(
         "I am connected to db and listening on port",
         process.env.PORT
       );
     });
-  } catch (err) {}
+  } catch (err) {
+    console.log(err)
+  }
 };
 start().catch((err) => {
   console.log(err);

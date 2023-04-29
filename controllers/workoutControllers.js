@@ -4,34 +4,38 @@ const mongoose = require("mongoose");
 const createWorkout = async (request, response) => {
   const { title, load, reps } = request.body;
 
-  const emptyField = [];
-
-  if (!title) {
-    emptyField.push("title");
-  }
-  if (!load) {
-    emptyField.push("load");
-  }
-  if (!reps) {
-    emptyField.push("reps");
-  }
-  if (emptyField.length > 0) {
-    return response
-      .status(400)
-      .json({ error: "Please fill in all the fields", emptyField });
-  }
-
   try {
+    const emptyField = [];
+
+    if (!title) {
+      emptyField.push("title");
+    }
+    if (!load) {
+      emptyField.push("load");
+    }
+    if (!reps) {
+      emptyField.push("reps");
+    }
+    if (emptyField.length > 0) {
+      return response
+        .status(400)
+        .json({ error: "Please fill in all the fields", emptyField });
+    }
     const workout = await Workout.create({ title, load, reps });
     response.status(200).json(workout);
   } catch (error) {
+    console.log(error)
     response.status(400).json({ error: error.message });
   }
 };
 
 const getAllWorkout = async (request, response) => {
-  const workout = await Workout.find({}).sort({ createdAt: -1 });
+  try {
+    const workout = await Workout.find({}).sort({ createdAt: -1 });
   response.status(200).json(workout);
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 const getSingleWorkout = async (request, response) => {
